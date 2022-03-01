@@ -1,0 +1,8 @@
+D:\PROJELER\BankaATM\BankaATM\bin\Debug\BankaATM.exe.config
+D:\PROJELER\BankaATM\BankaATM\bin\Debug\BankaATM.exe
+D:\PROJELER\BankaATM\BankaATM\bin\Debug\BankaATM.pdb
+D:\PROJELER\BankaATM\BankaATM\obj\Debug\BankaATM.csproj.AssemblyReference.cache
+D:\PROJELER\BankaATM\BankaATM\obj\Debug\BankaATM.csproj.SuggestedBindingRedirects.cache
+D:\PROJELER\BankaATM\BankaATM\obj\Debug\BankaATM.csproj.CoreCompileInputs.cache
+D:\PROJELER\BankaATM\BankaATM\obj\Debug\BankaATM.exe
+D:\PROJELER\BankaATM\BankaATM\obj\Debug\BankaATM.pdb
