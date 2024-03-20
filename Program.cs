@@ -8,58 +8,116 @@ namespace BankaATM
 {
     internal class Program
     {
+        static decimal bakiye; // Para birimi olarak decimal tipi kullanılabilir
         static void Main(string[] args)
         {
+            BaslangicAyarlariYap();
+            MenuGoster();
+            IslemSec();
+        }
 
-            int bakiye = 10000;
+        static void BaslangicAyarlariYap()
+        {
             Console.BackgroundColor = ConsoleColor.Yellow;
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine( "Bakiyeniz ="+bakiye);
+            Console.WriteLine("Lütfen Başlangıç Bakiyenize giriniz:");
+            while (!decimal.TryParse(Console.ReadLine(), out bakiye) || bakiye < 0)
+            {
+                Console.WriteLine("Geçersiz bakiye. Tekrar giriniz:");
+            }
+            Console.WriteLine("Bakiyeniz = " + (bakiye));
+        }
+
+        static void MenuGoster()
+        {
             Console.WriteLine("\n****İŞLEMLER****\n");
             Console.WriteLine("1.Para Çekme");
             Console.WriteLine("2.Para Yatırma");
             Console.WriteLine("3.Bakiye Sorgulama");
-            Console.WriteLine("4.Kart Iade");
+            Console.WriteLine("4.Kart İade");
+            Console.WriteLine("5. İşlemi Bitir");
+        }
 
-            Console.WriteLine("\nİşleminizi Seciniz :");
-            int islem = Convert.ToInt32(Console.ReadLine());
-            switch(islem)
+        static void IslemSec()
+        {
+            int islem;
+            do
             {
-                case 1: 
-                    Console.WriteLine("Bakiyeniz ="+bakiye);
-                    Console.Write("Çekmek istediğiniz tutarı giriniz :");
-                    int tutar = Convert.ToInt32(Console.ReadLine());
-                    if(tutar>bakiye)
-                    {
-                        Console.Write("Yetersiz bakiye.Tekrar deneyiniz.");
-                        tutar = Convert.ToInt32(Console.ReadLine());
-                    }
-                    bakiye -= tutar;
-                    Console.WriteLine("Yeni Bakiyeniz=" + bakiye);
-                    break;
+                Console.WriteLine("İşleminizi Seçiniz :");
+                while (!int.TryParse(Console.ReadLine(), out islem))
+                {
+                    Console.WriteLine("Lütfen geçerli bir işlem seçiniz:");
+                }
 
-                case 2:
-                    Console.WriteLine("Bakiyeniz=" + bakiye);
-                    Console.Write("Yatırmak istediğiniz tutarı giriniz :");
-                     tutar = Convert.ToInt32(Console.ReadLine());
-                    bakiye += tutar;
-                    Console.WriteLine("Yeni Bakiyeniz ="+bakiye);
-                    break;
+                switch (islem)
+                {
+                    case 1:
+                        ParaCekme();
+                        break;
+                    case 2:
+                        ParaYatirma();
+                        break;
+                    case 3:
+                        BakiyeSorgulama();
+                        break;
+                    case 4:
+                        KartIade();
+                        break;
+                    case 5:
+                        Console.WriteLine("İşlem tamamlandı. Programdan çıkılıyor...");
+                        return;
+                    default:
+                        Console.WriteLine("Yanlış işlem seçtiniz. Tekrar giriniz.");
+                        break;
+                }
+            } while (true);
+        }
 
-                case 3: 
-                    Console.WriteLine("Bakiyeniz="+bakiye);
-                    break;
+        static void ParaCekme()
+        {
+            Console.WriteLine("Bakiyeniz = " + FormatlaBakiye(bakiye));
+            decimal tutar;
+            do
+            {
+                Console.Write("Çekmek istediğiniz tutarı giriniz :");
+            } while (!decimal.TryParse(Console.ReadLine(), out tutar) || tutar < 0);
 
-                case 4: 
-                    Console.WriteLine("Kartınızı almayı unutmayınız.!!");
-                    break;
-                default:
-                    Console.WriteLine("Yanlış islem sectiniz.Tekrar giriniz.");
-                    break;
+            if (tutar > bakiye)
+            {
+                Console.WriteLine("Yetersiz bakiye. Tekrar deneyiniz:");
+                return;
             }
-            Console.ReadLine();
+            bakiye -= tutar;
+            Console.WriteLine("Yeni Bakiyeniz = " + FormatlaBakiye(bakiye));
+        }
 
+        static void ParaYatirma()
+        {
+            Console.WriteLine("Bakiyeniz = " + FormatlaBakiye(bakiye));
+            decimal tutar;
+            do
+            {
+                Console.Write("Yatırmak istediğiniz tutarı giriniz :");
+            } while (!decimal.TryParse(Console.ReadLine(), out tutar) || tutar < 0);
+
+            bakiye += tutar;
+            Console.WriteLine("Yeni Bakiyeniz = " + FormatlaBakiye(bakiye));
+        }
+
+        static void BakiyeSorgulama()
+        {
+            Console.WriteLine("Bakiyeniz = " + FormatlaBakiye(bakiye));
+        }
+
+        static void KartIade()
+        {
+            Console.WriteLine("Kartınızı almayı unutmayınız.!!");
+        }
+
+        static string FormatlaBakiye(decimal bakiye)
+        {
+            return bakiye.ToString("C2"); // Para birimi formatı kullanmak için
         }
     }
 }
